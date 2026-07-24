@@ -1,0 +1,97 @@
+import { reviews, ratingSummary } from '@/data';
+import { useReveal } from '@/hooks/useReveal';
+import { Star, Quote } from 'lucide-react';
+
+export default function Reviews() {
+  const { ref, visible } = useReveal<HTMLDivElement>();
+  const maxCount = Math.max(...ratingSummary.breakdown.map((b) => b.count));
+
+  return (
+    <section id="velemenyek" className="bg-coffee-950 py-24 lg:py-32">
+      <div ref={ref} className={`mx-auto max-w-7xl px-6 lg:px-8 reveal ${visible ? 'is-visible' : ''}`}>
+        <div className="grid gap-12 lg:grid-cols-[360px_1fr] lg:gap-16">
+          <div className="lg:sticky lg:top-28 lg:self-start">
+            <span className="font-display text-sm font-semibold uppercase tracking-[0.2em] text-coffee-400">
+              Vélemények
+            </span>
+            <h2 className="mt-3 font-display text-4xl font-bold text-cream-50 sm:text-5xl">
+              Mit mondanak a vendégek
+            </h2>
+
+            <div className="mt-8 flex items-end gap-4">
+              <span className="font-display text-6xl font-bold text-coffee-300">{ratingSummary.average}</span>
+              <div className="pb-2">
+                <div className="flex">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`h-5 w-5 ${i < 4 ? 'fill-coffee-400 text-coffee-400' : 'fill-coffee-400/50 text-coffee-400/50'}`}
+                    />
+                  ))}
+                </div>
+                <p className="mt-1 text-sm text-cream-100/70">{ratingSummary.total} vélemény</p>
+              </div>
+            </div>
+
+            <div className="mt-6 space-y-2.5">
+              {ratingSummary.breakdown.map((b) => (
+                <div key={b.stars} className="flex items-center gap-3">
+                  <span className="w-3 text-sm text-cream-100/70">{b.stars}</span>
+                  <Star className="h-3.5 w-3.5 fill-coffee-400 text-coffee-400" />
+                  <div className="h-2 flex-1 overflow-hidden rounded-full bg-coffee-800">
+                    <div
+                      className="h-full rounded-full bg-coffee-400 transition-all duration-700"
+                      style={{ width: `${(b.count / maxCount) * 100}%` }}
+                    />
+                  </div>
+                  <span className="w-10 text-right text-sm text-cream-100/60">{b.count}</span>
+                </div>
+              ))}
+            </div>
+
+            <a
+              href="https://www.google.com/maps"
+              target="_blank"
+              rel="noreferrer"
+              className="mt-8 inline-flex items-center gap-2 rounded-full border border-cream-200/30 px-6 py-3 text-sm font-semibold text-cream-50 transition-all hover:bg-cream-50/10"
+            >
+              További vélemények a Google Térképen
+            </a>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+            {reviews.map((r, i) => (
+              <article
+                key={r.name}
+                style={{ animationDelay: `${i * 120}ms` }}
+                className="flex flex-col rounded-2xl border border-coffee-800 bg-coffee-900/60 p-6 backdrop-blur-sm transition-all hover:border-coffee-600 hover:bg-coffee-900"
+              >
+                <Quote className="h-8 w-8 text-coffee-600" />
+                <p className="mt-4 flex-1 text-sm leading-relaxed text-cream-100/85">"{r.text}"</p>
+                <div className="mt-6 flex items-center gap-3 border-t border-coffee-800 pt-4">
+                  <img
+                    src={r.avatar}
+                    alt={r.name}
+                    className="h-11 w-11 rounded-full object-cover ring-2 ring-coffee-700"
+                  />
+                  <div>
+                    <p className="font-semibold text-cream-50">{r.name}</p>
+                    <p className="text-xs text-cream-100/60">{r.role}</p>
+                  </div>
+                </div>
+                <div className="mt-3 flex items-center justify-between">
+                  <div className="flex">
+                    {[...Array(r.rating)].map((_, j) => (
+                      <Star key={j} className="h-4 w-4 fill-coffee-400 text-coffee-400" />
+                    ))}
+                  </div>
+                  <span className="text-xs text-cream-100/50">{r.date}</span>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

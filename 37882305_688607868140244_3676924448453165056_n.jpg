@@ -1,0 +1,78 @@
+import { Star, MapPin, Clock, UtensilsCrossed, ChevronDown } from 'lucide-react';
+
+export default function Hero() {
+  return (
+    <section id="top" className="relative min-h-screen w-full overflow-hidden">
+      <div className="absolute inset-0">
+        <img
+          src="/src/components/487170675_1219408333519757_6973379505483205622_n.jpg"
+          alt="City Café ételek"
+          className="h-full w-full object-cover object-center animate-slow-zoom"
+        />
+        <div className="absolute inset-0 bg-coffee-950/45" />
+        <div className="absolute inset-0 bg-gradient-to-b from-coffee-950/40 via-transparent to-coffee-950/60" />
+      </div>
+
+      <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-6 pt-24 pb-16 lg:px-8">
+        <div className="max-w-3xl animate-fade-up">
+          <span className="inline-flex items-center gap-2 rounded-full border border-cream-200/30 bg-cream-50/10 px-4 py-1.5 text-sm font-medium text-cream-100 backdrop-blur-sm">
+            <MapPin className="h-4 w-4 text-coffee-300" />
+            Siklós, Felszabadulás u. 22
+          </span>
+
+          <h1 className="mt-6 font-display text-5xl font-bold leading-[1.05] text-cream-50 sm:text-6xl lg:text-7xl">
+            Ahol a kávé <br />
+            <span className="text-coffee-300">társaság</span> és jó étel találkozik
+          </h1>
+
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-cream-100/85">
+            Siklós egyik legjobb vendéglátó egysége. Friss kávé, ropogós pizza,
+            házi gyros és lédús hamburgerek egy hangulatos helyen.
+          </p>
+
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            <a
+              href="#etlap"
+              className="flex items-center gap-2 rounded-full bg-coffee-500 px-7 py-3.5 font-semibold text-coffee-950 transition-all hover:bg-coffee-400 hover:shadow-xl hover:shadow-coffee-500/30"
+            >
+              <UtensilsCrossed className="h-5 w-5" strokeWidth={2.5} />
+              Étlap megtekintése
+            </a>
+            <a
+              href="#kapcsolat"
+              className="flex items-center gap-2 rounded-full border border-cream-200/40 px-7 py-3.5 font-semibold text-cream-50 backdrop-blur-sm transition-all hover:bg-cream-50/10"
+            >
+              Útvonalterv
+            </a>
+          </div>
+
+          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 text-cream-100/90">
+            <div className="flex items-center gap-2">
+              <div className="flex">
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    className={`h-5 w-5 ${i < 4 ? 'fill-coffee-400 text-coffee-400' : 'fill-coffee-400/50 text-coffee-400/50'}`}
+                  />
+                ))}
+              </div>
+              <span className="font-medium">4,6 · 612 vélemény</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Clock className="h-5 w-5 text-coffee-300" />
+              <span>Személyenként 2000–4000 Ft</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a
+        href="#etlap"
+        className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-cream-100/70 transition-colors hover:text-cream-50"
+        aria-label="Görgetés le"
+      >
+        <ChevronDown className="h-8 w-8 animate-bounce" />
+      </a>
+    </section>
+  );
+}

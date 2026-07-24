@@ -1,0 +1,194 @@
+export type PizzaItem = {
+  number: number;
+  name: string;
+  ingredients: string;
+  prices: { s26: number; s32: number; s45: number };
+};
+
+export type SimpleMenuItem = {
+  name: string;
+  description: string;
+  price: number;
+  note?: string;
+};
+
+export type MenuCategory =
+  | { id: 'pizzak'; label: string; blurb: string; kind: 'pizza'; items: PizzaItem[]; extras: { label: string; prices: [number, number, number] }[] }
+  | { id: string; label: string; blurb: string; kind: 'simple'; items: SimpleMenuItem[]; footnote?: string };
+
+export const menu: MenuCategory[] = [
+  {
+    id: 'gyros',
+    label: 'Gyros',
+    blurb: 'Friss gyros hús, ropogós zöldségek és házi gyros szósz.',
+    kind: 'simple',
+    items: [
+      { name: 'City Gyros', description: 'Hús, jégsaláta, uborka, paradicsom, hagyma, gyros szósz', price: 2200 },
+      { name: 'Dupla húsos gyros', description: 'Dupla hús, jégsaláta, uborka, paradicsom, hagyma, gyros szósz', price: 2500 },
+      { name: 'Gyros tál', description: 'Hús, hasábburgonya, jégsaláta, uborka, paradicsom, hagyma, gyros szósz, pita', price: 3400 },
+      { name: 'Dupla húsos gyros tál', description: 'Dupla hús, hasábburgonya, jégsaláta, uborka, paradicsom, hagyma, gyros szósz, pita', price: 3900 },
+    ],
+  },
+  {
+    id: 'pizza_kiflik',
+    label: 'Pizza Kiflik',
+    blurb: 'Ropogós, töltött kiflik – gyors és laktató harapnivaló.',
+    kind: 'simple',
+    items: [
+      { name: '1.) Csirkés-sajtos', description: 'Csirke és sajt töltelékkel', price: 2500 },
+      { name: '2.) Kolbászos-sajtos', description: 'Kolbász és sajt töltelékkel', price: 2300 },
+      { name: '3.) Sonkás-gombás-sajtos', description: 'Sonka, gomba és sajt', price: 2300 },
+      { name: '4.) Sonkás-sajtos', description: 'Sonka és sajt', price: 2300 },
+      { name: '5.) Sonkás-kukoricás-sajtos', description: 'Sonka, kukorica és sajt', price: 2300 },
+      { name: '6.) Sajtos', description: 'Trapista sajt + feta', price: 2200 },
+      { name: 'Fűszervaj', description: 'Házi fűszervaj mellé', price: 500 },
+    ],
+  },
+  {
+    id: 'pizzak',
+    label: 'Pizzák',
+    blurb: 'Kézzel nyújtott tészta, friss alapanyagok. Három méretben: 26 cm, 32 cm, 45 cm.',
+    kind: 'pizza',
+    items: [
+      { number: 1, name: 'Favorito', ingredients: 'p.szósz, sajt, sonka', prices: { s26: 2600, s32: 3000, s45: 5000 } },
+      { number: 2, name: 'Donna', ingredients: 'p.szósz, sajt, sonka, kukorica', prices: { s26: 2700, s32: 3100, s45: 5200 } },
+      { number: 3, name: 'Margarita', ingredients: 'p.szósz, sajt, paradicsom, oregánó', prices: { s26: 2400, s32: 2800, s45: 4800 } },
+      { number: 4, name: 'Capricciosa', ingredients: 'p.szósz, sajt, sonka, gomba', prices: { s26: 2700, s32: 3100, s45: 5200 } },
+      { number: 5, name: 'Hawaii', ingredients: 'p.szósz, sajt, sonka, kukorica, ananász', prices: { s26: 2700, s32: 3100, s45: 5200 } },
+      { number: 6, name: 'Profuno', ingredients: 'p.szósz, sajt, sonka, gomba, kukorica', prices: { s26: 2800, s32: 3200, s45: 5300 } },
+      { number: 7, name: 'Giuseppe', ingredients: 'p.szósz, sajt, sonka, gomba, kolbász, paprika', prices: { s26: 2900, s32: 3300, s45: 5400 } },
+      { number: 8, name: 'Magyaros', ingredients: 'p.szósz, sajt, kolbász, hagyma, pepperóni paprika', prices: { s26: 2700, s32: 3200, s45: 5200 } },
+      { number: 9, name: 'Piccante', ingredients: 'p.szósz, sajt, kolbász, pepperóni paprika, tojás', prices: { s26: 2700, s32: 3200, s45: 5200 } },
+      { number: 10, name: 'Castello', ingredients: 'tejföl, sajt, sonka, kolbász, pepperóni paprika, kukorica', prices: { s26: 3000, s32: 3400, s45: 5500 } },
+      { number: 11, name: 'Quattroformaggi', ingredients: 'p.szósz, trapista, mozzarella, füstölt sajt, parmezán', prices: { s26: 3200, s32: 3600, s45: 6100 } },
+      { number: 12, name: 'Tonno', ingredients: 'p.szósz, sajt, tonhal, oliva bogyó, hagyma', prices: { s26: 3200, s32: 3600, s45: 6000 } },
+      { number: 13, name: 'Messicano', ingredients: 'p.szósz, sajt, bacon, kukorica, bab, hagyma, jalapeno', prices: { s26: 3100, s32: 3500, s45: 5800 } },
+      { number: 14, name: 'Mediterrán', ingredients: 'p.szósz, sajt, csirkemell, feta, olivabogyó, oregánó', prices: { s26: 3100, s32: 3500, s45: 5800 } },
+      { number: 15, name: 'Carnivoro', ingredients: 'p.szósz, sajt, csirkemell, sonka, pepperóni paprika, tojás', prices: { s26: 3300, s32: 3700, s45: 6100 } },
+      { number: 16, name: 'Fitness', ingredients: 'p.szósz, sajt, sonka, gomba, kukorica, paprika, fetasajt, paradicsom', prices: { s26: 2900, s32: 3400, s45: 5500 } },
+      { number: 17, name: 'Creator', ingredients: 'p.szósz, sajt + választható 4 feltét', prices: { s26: 3700, s32: 4200, s45: 6300 } },
+      { number: 18, name: 'Preferito', ingredients: 'tejföl, sajt, fokhagyma, bacon, kolbász, pepperóni paprika', prices: { s26: 3200, s32: 3600, s45: 5900 } },
+      { number: 19, name: 'Fagioli', ingredients: 'p.szósz, sajt, sonka, bab, hagyma, tojás', prices: { s26: 3200, s32: 3600, s45: 5900 } },
+      { number: 20, name: 'Frutti di Mare', ingredients: 'p.szósz, sajt, tenger gyümölcsei', prices: { s26: 3400, s32: 3800, s45: 6000 } },
+      { number: 21, name: 'Quarantino', ingredients: 'kapros szósz, gyros hús, sajt, feta sajt, olivabogyó, lilahagyma', prices: { s26: 3600, s32: 3900, s45: 6100 } },
+      { number: 22, name: 'Bologna', ingredients: 'bolognai ragu, sajt', prices: { s26: 2900, s32: 3400, s45: 5700 } },
+    ],
+    extras: [
+      { label: 'Plusz feltét: zöldség', prices: [300, 300, 400] },
+      { label: 'Plusz feltét: tojás', prices: [150, 150, 150] },
+      { label: 'Plusz feltét: hús', prices: [700, 700, 900] },
+    ],
+  },
+  {
+    id: 'hamburgerek',
+    label: 'Hamburgerek',
+    blurb: 'Marha húspogácsák friss zöldségekkel és házi szószokkal.',
+    kind: 'simple',
+    footnote: '+ köret (hasáb v. steak burgonya): 1100 Ft · Hambi menü (1–4. burger + köret + 0,25 üdítő): 4000 Ft',
+    items: [
+      { name: '1. City Burger', description: 'Marhahús, saláta, sajt, hagyma, ketchup, majonéz', price: 3200 },
+      { name: '2. Yankee Burger', description: 'Marhahús, saláta, sajt, csemege uborka, hagyma, ketchup, mustár', price: 3200 },
+      { name: '3. Bac Burger', description: 'Marhahús, saláta, sajt, bacon, hagyma, paradicsom, ketchup', price: 3200 },
+      { name: '4. Dante Burger', description: 'Marhahús, saláta, sajt, jalapeno paprika, paradicsom, hagyma, csípős ketchup', price: 3200 },
+      { name: '5. City Beef Burger', description: '2 db marhahús, dupla sajt, saláta, csemege hagyma, csalamádé, ketchup v. barbecue szósz', price: 3500 },
+      { name: '6. City Big Burger', description: '3 db marhahús, dupla sajt, saláta, csemege uborka, hagyma, ketchup, majonéz', price: 4000 },
+    ],
+  },
+  {
+    id: 'grill',
+    label: 'Grill Ételek',
+    blurb: 'Parázson sült húsok, csevap, pljeskovica – balkáni ízek bőséges adagban.',
+    kind: 'simple',
+    footnote: '+ köret (hasábburgonya v. steak burgonya): 1100 Ft',
+    items: [
+      { name: 'Grill kolbász (csípős)', description: '3 db grill kolbász, mustár, lepény', price: 2600 },
+      { name: 'Pljeskovica lepényben', description: 'Húspogácsa, ajvár, tejföl, lila hagyma, lepény', price: 3200 },
+      { name: 'Dupla húsos pljeskovica lepényben', description: '2 húspogácsa, ajvár, tejföl, lila hagyma, lepény', price: 3700 },
+      { name: 'Csevap tál', description: '8 csevap, hasábburgonya, tejföl', price: 4000 },
+      { name: 'Grill tál', description: '4 db csevap, 1 db pljeskovica, 2 db grill kolbász, hasábburgonya, steak burgonya, lila hagyma, csalamádé, ajvár, tejföl, 1 db lepény', price: 5300 },
+      { name: '2 személyes grill tál', description: '8 db csevap, 2 db pljeskovica, 4 db grill kolbász, hasábburgonya, steak burgonya, lila hagyma, csalamádé, ajvár, tejföl, 1 db lepény', price: 8000 },
+      { name: '4 személyes grill tál', description: '16 db csevap, 4 db pljeskovica, 8 db grill kolbász, hasábburgonya, steak burgonya, lila hagyma, csalamádé, ajvár, tejföl, 1 db lepény', price: 12900 },
+    ],
+  },
+  {
+    id: 'salatok',
+    label: 'Saláták',
+    blurb: 'Friss, ropogós saláták – ezersziget, cézár, kapros vagy joghurtos öntettel.',
+    kind: 'simple',
+    footnote: 'Öntetek: ezersziget, cézár, kapros, joghurtos',
+    items: [
+      { name: 'Fittnes Sali', description: 'Jégsali, paradicsom, uborka, paprika, sajt, 2 szelet pirítós', price: 2300 },
+      { name: 'Cézár Sali', description: 'Jégsali, paradicsom, uborka, paprika, csirke, pirított zsemlekocka, sajt', price: 2700 },
+      { name: 'Tonhalas Sali', description: 'Jégsali, paradicsom, uborka, paprika, tonhal, 2 szelet pirítós', price: 2700 },
+      { name: 'Görög Sali', description: 'Jégsali, paradicsom, paprika, lila hagyma, uborka, oliva, feta sajt, pirítós', price: 2700 },
+    ],
+  },
+];
+
+export type Review = {
+  name: string;
+  role: string;
+  rating: number;
+  date: string;
+  text: string;
+  avatar: string;
+};
+
+export const reviews: Review[] = [
+  {
+    name: 'Zoli Pilly',
+    role: 'Helyi idegenvezető · 312 vélemény',
+    rating: 5,
+    date: '5 hónapja',
+    text: 'Nagyon finom és bőséges ételek, finom alkoholmentes italok. Sör választék talán ami kevesebb, de nem gond! Csak ajánlani tudom őket!',
+    avatar: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=200',
+  },
+  {
+    name: 'fulopimi',
+    role: 'Helyi idegenvezető · 38 vélemény',
+    rating: 5,
+    date: 'egy hónapja',
+    text: 'Két Óriás Schnauzerrel voltunk ott. Helyet foglaltunk, a rekkenő hőség miatt vizet akartunk kérni a kutyáknak. A fiatal pincér srác kérelem nélkül hozta a vizet. Bárcsak minden hely ilyen lenne!',
+    avatar: 'https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=200',
+  },
+  {
+    name: 'Gábor Dencs',
+    role: 'Helyi idegenvezető · 587 vélemény',
+    rating: 5,
+    date: '3 éve',
+    text: 'Kiváló kávézó-pizzéria, megkockáztatom, hogy Siklós egyik legjobb vendéglátó egysége. City gyrost, pizzát és pizza kiflit rendeltünk, gyorsan felszolgálták. Az ételek igazán finomak.',
+    avatar: 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=200',
+  },
+];
+
+export const ratingSummary = {
+  average: 4.6,
+  total: 612,
+  breakdown: [
+    { stars: 5, count: 480 },
+    { stars: 4, count: 95 },
+    { stars: 3, count: 22 },
+    { stars: 2, count: 9 },
+    { stars: 1, count: 6 },
+  ],
+};
+
+export const galleryImages = [
+  { url: '/src/components/37882305_688607868140244_3676924448453165056_n.jpg', alt: 'Grill tál', span: 'lg:col-span-2 lg:row-span-2' },
+  { url: '/src/components/37926375_688607678140263_2818443632254648320_n.jpg', alt: 'Frissítő limonádék', span: '' },
+  { url: '/src/components/37830846_688608024806895_7801763215070724096_n.jpg', alt: 'Frissen sült pizza', span: '' },
+  { url: '/src/components/37827702_688608204806877_3580319226532986880_n.jpg', alt: 'Pizza kifli', span: '' },
+  { url: '/src/components/37802795_688608661473498_8121966367155945472_n.jpg', alt: 'Gyros tál', span: '' },
+];
+
+export const openingHours = [
+  { day: 'Hétfő', hours: '10:00 – 22:00' },
+  { day: 'Kedd', hours: '10:00 – 22:00' },
+  { day: 'Szerda', hours: '10:00 – 22:00' },
+  { day: 'Csütörtök', hours: '10:00 – 22:00' },
+  { day: 'Péntek', hours: '10:00 – 23:00' },
+  { day: 'Szombat', hours: '10:00 – 23:00' },
+  { day: 'Vasárnap', hours: '10:00 – 22:00' },
+];
+
+export const formatHuf = (price: number) => `${price.toLocaleString('hu-HU')} Ft`;

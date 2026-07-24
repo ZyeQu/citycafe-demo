@@ -1,0 +1,154 @@
+import { useState } from 'react';
+import { menu, formatHuf, type MenuCategory } from '@/data';
+import { useReveal } from '@/hooks/useReveal';
+import { Utensils, Flame, Info } from 'lucide-react';
+
+type PizzaSize = 's26' | 's32' | 's45';
+const sizeLabel: Record<PizzaSize, string> = { s26: '26 cm', s32: '32 cm', s45: '45 cm' };
+
+function PizzaMenu({ cat }: { cat: Extract<MenuCategory, { kind: 'pizza' }> }) {
+  const [size, setSize] = useState<PizzaSize>('s32');
+
+  return (
+    <>
+      <div className="mt-6 flex items-center justify-center gap-2">
+        {(['s26', 's32', 's45'] as PizzaSize[]).map((s) => (
+          <button
+            key={s}
+            onClick={() => setSize(s)}
+            className={`rounded-full px-5 py-2 text-sm font-semibold transition-all ${
+              size === s
+                ? 'bg-coffee-700 text-cream-50 shadow'
+                : 'bg-cream-200 text-coffee-700 hover:bg-cream-300'
+            }`}
+          >
+            {sizeLabel[s]}
+          </button>
+        ))}
+      </div>
+
+      <div className="mt-6 grid gap-3 md:grid-cols-2">
+        {cat.items.map((item) => (
+          <article
+            key={item.name}
+            className="group flex items-start gap-4 rounded-xl border border-cream-300 bg-white px-5 py-4 transition-all hover:border-coffee-300 hover:shadow-md"
+          >
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-coffee-100 text-xs font-bold text-coffee-700 group-hover:bg-coffee-500 group-hover:text-cream-50 transition-colors">
+              {item.number}
+            </span>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-baseline justify-between gap-3">
+                <h3 className="font-display text-base font-semibold text-coffee-900">{item.name}</h3>
+                <span className="whitespace-nowrap font-semibold text-coffee-700 tabular-nums">
+                  {formatHuf(item.prices[size])}
+                </span>
+              </div>
+              <p className="mt-0.5 text-xs text-coffee-500 leading-relaxed">{item.ingredients}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div className="mt-6 rounded-xl border border-cream-300 bg-white px-5 py-4">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-coffee-500">Plusz feltétek</p>
+        <div className="flex flex-wrap gap-x-8 gap-y-2">
+          {cat.extras.map((e) => (
+            <div key={e.label} className="flex items-center gap-3 text-sm text-coffee-700">
+              <span>{e.label}:</span>
+              <span className="font-medium">{e.prices.map((p) => formatHuf(p)).join(' / ')}</span>
+            </div>
+          ))}
+        </div>
+        <p className="mt-3 text-xs text-coffee-500">
+          Ketchup 400 Ft · Kis doboz 200 Ft, nagy doboz 300 Ft · Az árak az ÁFÁ-t tartalmazzák.
+        </p>
+      </div>
+    </>
+  );
+}
+
+function SimpleMenu({ cat }: { cat: Extract<MenuCategory, { kind: 'simple' }> }) {
+  return (
+    <>
+      <div className="mt-6 grid gap-3 md:grid-cols-2">
+        {cat.items.map((item) => (
+          <article
+            key={item.name}
+            className="group flex items-start gap-4 rounded-xl border border-cream-300 bg-white px-5 py-4 transition-all hover:border-coffee-300 hover:shadow-md"
+          >
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-coffee-100 text-coffee-600 group-hover:bg-coffee-500 group-hover:text-cream-50 transition-colors">
+              <Utensils className="h-4 w-4" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-baseline justify-between gap-3">
+                <h3 className="font-display text-base font-semibold text-coffee-900">{item.name}</h3>
+                <span className="whitespace-nowrap font-semibold text-coffee-700 tabular-nums">
+                  {formatHuf(item.price)}
+                </span>
+              </div>
+              <p className="mt-0.5 text-xs text-coffee-500 leading-relaxed">{item.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+      {cat.footnote && (
+        <div className="mt-4 flex items-start gap-2 rounded-xl border border-cream-200 bg-white px-5 py-3">
+          <Info className="mt-0.5 h-4 w-4 shrink-0 text-coffee-400" />
+          <p className="text-sm text-coffee-600">{cat.footnote}</p>
+        </div>
+      )}
+    </>
+  );
+}
+
+export default function Menu() {
+  const [active, setActive] = useState(menu[0].id);
+  const { ref, visible } = useReveal<HTMLDivElement>();
+  const current = menu.find((c) => c.id === active) ?? menu[0];
+
+  return (
+    <section id="etlap" className="bg-cream-50 py-24 lg:py-32">
+      <div ref={ref} className={`mx-auto max-w-7xl px-6 lg:px-8 reveal ${visible ? 'is-visible' : ''}`}>
+        <div className="text-center">
+          <span className="font-display text-sm font-semibold uppercase tracking-[0.2em] text-coffee-500">
+            Étlap
+          </span>
+          <h2 className="mt-3 font-display text-4xl font-bold text-coffee-900 sm:text-5xl">
+            Válassz kedvedre valót
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-coffee-700">
+            Friss alapanyagokból, házias ízekkel. Bármelyik fogást szívesen elkészítjük neked.
+          </p>
+        </div>
+
+        <div className="mt-10 flex flex-wrap justify-center gap-3">
+          {menu.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setActive(cat.id)}
+              className={`flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all ${
+                active === cat.id
+                  ? 'bg-coffee-800 text-cream-50 shadow-lg shadow-coffee-900/20'
+                  : 'bg-cream-200 text-coffee-700 hover:bg-cream-300'
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+
+        <p className="mt-6 text-center text-sm italic text-coffee-600">{current.blurb}</p>
+
+        {current.kind === 'pizza' ? (
+          <PizzaMenu cat={current} />
+        ) : (
+          <SimpleMenu cat={current} />
+        )}
+
+        <p className="mt-10 text-center text-xs text-coffee-400">
+          Az árak forintban értendők és az ÁFÁ-t tartalmazzák. A pontos étlap megtekinthető a helyszínen.
+        </p>
+      </div>
+    </section>
+  );
+}
